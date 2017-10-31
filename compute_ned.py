@@ -34,8 +34,8 @@ except:
     LOG = 'test.log' 
 
 #LOG_LEV = logging.ERROR
-LOG_LEV = logging.DEBUG
-#LOG_LEV = logging.INFO
+#LOG_LEV = logging.DEBUG
+LOG_LEV = logging.INFO
 
 # configuration of logging
 def get_logger(level=logging.WARNING):
@@ -177,8 +177,8 @@ def ned_from_class(classes_file):
                         continue
 
                     # get the phonemes 
-                    s1 = gold[classes[elem1][0]]['phon'][b1_:e1_] 
-                    s2 = gold[classes[elem2][0]]['phon'][b2_:e2_]
+                    s1 = gold[classes[elem1][0]]['phon'][b1_:e1_] if e1_>b1_ else np.array([gold[classes[elem1][0]]['phon'][b1_]])
+                    s2 = gold[classes[elem2][0]]['phon'][b2_:e2_] if e2_>b2_ else np.array([gold[classes[elem2][0]]['phon'][b2_]])
            
                     # short time window then it not found the phonems  
                     if len(s1) == 0 and len(s2) == 0:
@@ -220,7 +220,7 @@ def ned_from_class(classes_file):
                     # it will show some work is been done ...
                     n_total = n_pairs.next()
                     if (n_total%1e6) == 0.0:
-                        logging.debug("done %s pairs", n_total)
+                        logging.info("done %s pairs", n_total)
 
                 # clean the varibles that contains the tokens
                 classes = list()
